@@ -31,6 +31,17 @@ def check_stats():
     print("    method DELETE: {}".format(delete))
     print("{} status check".format(stat_count))
 
+    # aggregate IPs
+    print("IPs:")
+    ips = db_C.aggregate([
+        {"$group": {"_id": "$ip", "count": {"$sum": 1}}},
+        {"$sort": {"total": -1}},
+        {"$limit": 10}
+    ])
+
+    for ip in ips:
+        print("    {}: {}".format(ip.get("_id"), ip.get("total")))
+
 
 if __name__ == "__main__":
     check_stats()
