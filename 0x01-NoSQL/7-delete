@@ -1,0 +1,2 @@
+// deletes documents from school collection
+db.school.find({"name": "Holberton school"}).remove()
